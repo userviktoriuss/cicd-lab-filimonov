@@ -1,0 +1,20 @@
+# Jenkins в Docker для демонстрации на лекции.
+# Запуск:  cd jenkins && docker compose up -d --build
+# Открыть: http://localhost:8080, войти: admin / admin
+services:
+  jenkins:
+    build: .
+    container_name: jenkins
+    ports:
+      - "8080:8080"   # веб-интерфейс
+      - "50000:50000" # порт для агентов
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    environment:
+      # Демо-админ без мастера настройки (только для лекции, не для продакшена!)
+      JENKINS_ADMIN_ID: admin
+      JENKINS_ADMIN_PASSWORD: admin
+    restart: unless-stopped
+
+volumes:
+  jenkins_home:
